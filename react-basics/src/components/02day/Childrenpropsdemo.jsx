@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
 // const Childrenpropsdemo = (props) => {
 //   return (
@@ -15,10 +15,10 @@ import React from 'react'
 
 const Childrenpropsdemo = ({empid,children}) => {
     return (
-      <div>
+      <Fragment>
         {empid}
         {children}  
-      </div>
+      </Fragment>
     )
   }
   

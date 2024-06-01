@@ -6,7 +6,7 @@ const EventsDemo = () => {
   let handleDelete1=(a,b)=>alert(a+b)
 
   return (
-    <div>
+    <>
       <button type="button" class="btn btn-primary me-3" onClick={()=>alert("button clicked")}>
         Click Me </button>
 
@@ -16,7 +16,7 @@ const EventsDemo = () => {
     
       <button type="button" class="btn btn-primary me-3" onClick={()=>handleDelete1(4,5)}>Click Me </button>
     
-    </div>
+    </>
   )
 }
 

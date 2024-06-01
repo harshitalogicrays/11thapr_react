@@ -18,11 +18,6 @@ Props -
 
   ==================================================================
 
-image display
-Fragment 
-defaultProps and PropsTypes 
-
-state variable 
 
 
 

@@ -5,12 +5,12 @@ const Propsdemo = (props) => {
     console.log(props)
     // props.username="Ram"//not allowed- read only    
   return (
-    <div>
+    <React.Fragment>
       <h1 id="" className='' name=''>Props demo</h1>
       <h3>{props.username}</h3>
       <h3>{props.address}</h3>
       {a}
-    </div>
+    </React.Fragment>
   )
 }
 export default Propsdemo

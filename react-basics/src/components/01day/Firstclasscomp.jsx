@@ -15,9 +15,9 @@ import React, { Component } from 'react'
 export default class Firstclasscomp extends Component {
   render() {
     return (
-      <div>
+      <>
          <h2>First Class Component</h2>
-      </div>
+      </>
     )
   }
 }
