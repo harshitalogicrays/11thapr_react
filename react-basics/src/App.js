@@ -9,6 +9,10 @@ import ImageDisplay from './components/03day/ImageDisplay';
 import DefaultandPropsType from './components/03day/DefaultandPropsType';
 import Stateinfun from './components/03day/Stateinfun';
 import CounterApp from './components/03day/CounterApp';
+import FetchTextBoxData from './components/04day/FetchTextBoxData';
+import Calculator from './components/04day/Calculator';
+import Form1 from './components/04day/Form1';
+import Form2 from './components/04day/Form2';
 
 function App() {
   let [isLoggedIn,setIsLoggedIn]=useState(true)
@@ -41,7 +45,12 @@ function App() {
         pincode="erhjhre"/> */}
 
        {/* <Stateinfun/>  */}
-       <CounterApp/>
+       {/* <CounterApp/> */}
+
+       {/* <FetchTextBoxData name="Ram"/> */}
+       {/* <Calculator/>   */}
+       {/* <Form1/> */}
+       <Form2/>
     </div>
 
     // React.createElement("div",{className:"App"},React.createElement("h1",{},"Hello React"),

@@ -1,0 +1,5 @@
+
+forms -
+1. controlled  - react manages it - state variable and onChange handler
+2. uncontrolled - DOM itself manages it 
+
