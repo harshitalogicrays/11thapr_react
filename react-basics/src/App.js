@@ -13,13 +13,42 @@ import FetchTextBoxData from './components/04day/FetchTextBoxData';
 import Calculator from './components/04day/Calculator';
 import Form1 from './components/04day/Form1';
 import Form2 from './components/04day/Form2';
+import ConditionalRendering from './components/05day/ConditionalRendering';
+import Sidebar from './components/Sidebar';
+import { Route, Routes } from 'react-router-dom';
+import ListRendering from './components/05day/ListRendering';
+import ProductList from './components/05day/ProductList';
 
 function App() {
   let [isLoggedIn,setIsLoggedIn]=useState(true)
   return (
-    <div className='container mt-5'>
-      <label htmlFor=""></label>
-       <h1 className='text-primary'>Hello React</h1>
+    <>
+     
+
+      <h1>Functional Component Concepts</h1>
+      <hr/>
+      <div className='row'>
+        <div className='col-4'>
+            <Sidebar/>
+        </div>
+        <div className='col-8'>
+            <Routes>
+              <Route path='/' element={<Propsdemo/>}></Route>
+              <Route path='/event' element={<EventsDemo/>}></Route>
+              <Route path='/state' element={<Stateinfun/>}></Route>
+              <Route path='/condition' element={<ConditionalRendering/>}></Route>
+              <Route path='/form' element={<Form1/>}></Route>
+              <Route path='/list' element={<ListRendering/>}/>
+              <Route path='/products' element={<ProductList/>}/>
+          </Routes>
+        </div>
+      </div>
+     
+
+
+
+      {/* <label htmlFor=""></label>
+       <h1 className='text-primary'>Hello React</h1> */}
        {/* <h2>Welcome to LRA</h2>
        <p>para</p>
        <Firstfuncomp></Firstfuncomp> <br/>
@@ -50,8 +79,21 @@ function App() {
        {/* <FetchTextBoxData name="Ram"/> */}
        {/* <Calculator/>   */}
        {/* <Form1/> */}
-       <Form2/>
-    </div>
+       {/* <Form2/> */}
+
+          {/* <button
+            type="button"
+            class="btn btn-primary"
+            onClick={()=>setIsLoggedIn(!isLoggedIn)}
+          >
+            {isLoggedIn ? "Logout" : "Login"}
+          </button>
+          
+
+       <ConditionalRendering isLog={isLoggedIn} username="Ram"></ConditionalRendering> */}
+
+
+    </>
 
     // React.createElement("div",{className:"App"},React.createElement("h1",{},"Hello React"),
     // React.createElement("h2",{},"Welcome to LRA"),React.createElement("p",{},"para"),)

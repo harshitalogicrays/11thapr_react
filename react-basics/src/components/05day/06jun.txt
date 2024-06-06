@@ -1,0 +1,7 @@
+conditional rendering - 
+1. if else 
+2. javascript element 
+3. ternary operator  (?:) condition ? true : false 
+4. short circuit operator - (&&) condition && true
+
+list rendering -
