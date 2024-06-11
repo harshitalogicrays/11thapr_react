@@ -1,0 +1,27 @@
+6. react-bootstrap  -
+
+
+
+7. styled-components - npm i styled-components
+
+<MyButton></MyButton>
+
+custom component - 
+
+=================================================================================
+
+form validations -  regular form 
+
+react hook form -useForm()  html validations
+
+formik - useFormik()
+
+======================================================================
+lifting the state up 
+===============================================
+class component 
+==========================================
+uncontrolled component - 
+useCallback hook 
+useEffect hook 
+

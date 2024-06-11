@@ -48,6 +48,12 @@ const Sidebar = () => {
             <li class="nav-item">
                 <Link class="nav-link" to='/css'>CSS</Link>
             </li>
+            <li class="nav-item">
+                <Link class="nav-link" to='/rb'>React Bootstrap Form</Link>
+            </li>
+            <li class="nav-item">
+                <Link class="nav-link" to='/validations'>Form Validations</Link>
+            </li>
     </ul>
     </>
   )

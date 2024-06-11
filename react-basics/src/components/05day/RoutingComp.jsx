@@ -13,6 +13,8 @@ import Product01 from '../06day/Product01'
 import ProductData from '../06day/ProductData'
 import ReactCSS from '../06day/ReactCSS'
 import PageNotFound from '../06day/PageNotFound'
+import ReactBootstrapForm from '../07day/ReactBootstrapForm'
+import FormValidations from '../07day/FormValidations'
 
 const RoutingComp = () => {
   return (
@@ -31,6 +33,8 @@ const RoutingComp = () => {
             <Route path='product/form' element={<Product01/>}/>
             <Route path='products/card' element={<ProductData/>}/>
             <Route path='css' element={<ReactCSS/>}/>
+            <Route path='rb' element={<ReactBootstrapForm/>}/>
+            <Route path='validations' element={<FormValidations/>}/>
         </Route>
        
        
