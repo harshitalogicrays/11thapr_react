@@ -38,7 +38,7 @@ const FormValidations = () => {
                 <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="" className="form-label">Username</label>
-                    <input type="text"  name="username" className="form-control"
+                    <input type="text"  name="username" className={`form-control ${errors.nameerr && 'is-invalid'}`}
                     value={user.username} onChange={ (e)=> setUser({...user, username:e.target.value})}/>
                     {errors.nameerr && <span className='text-danger'>{errors.nameerr}</span>}
                  </div>

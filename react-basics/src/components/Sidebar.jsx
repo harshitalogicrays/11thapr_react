@@ -54,6 +54,15 @@ const Sidebar = () => {
             <li class="nav-item">
                 <Link class="nav-link" to='/validations'>Form Validations</Link>
             </li>
+            <li class="nav-item">
+                <Link class="nav-link" to='/reacthookform'>React Hook Form Validations</Link>
+            </li>
+            <li class="nav-item">
+                <Link class="nav-link" to='/lifting'>Lifting the state up</Link>
+            </li>
+            <li class="nav-item">
+                <Link class="nav-link" to='/random'>useCallback,useEffect and useRef demo</Link>
+            </li>
     </ul>
     </>
   )

@@ -15,6 +15,9 @@ import ReactCSS from '../06day/ReactCSS'
 import PageNotFound from '../06day/PageNotFound'
 import ReactBootstrapForm from '../07day/ReactBootstrapForm'
 import FormValidations from '../07day/FormValidations'
+import ReactHookform from '../08day/ReactHookform'
+import Counter from '../08day/Counter'
+import RandomNumGenerator from '../08day/RandomNumGenerator'
 
 const RoutingComp = () => {
   return (
@@ -35,6 +38,9 @@ const RoutingComp = () => {
             <Route path='css' element={<ReactCSS/>}/>
             <Route path='rb' element={<ReactBootstrapForm/>}/>
             <Route path='validations' element={<FormValidations/>}/>
+            <Route path='reacthookform' element={<ReactHookform/>}/>
+            <Route path='lifting' element={<Counter/>}/>
+            <Route path='random' element={<RandomNumGenerator/>}/>
         </Route>
        
        
