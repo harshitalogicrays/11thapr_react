@@ -15,25 +15,20 @@ import Form1 from './components/04day/Form1';
 import Form2 from './components/04day/Form2';
 import ConditionalRendering from './components/05day/ConditionalRendering';
 import Sidebar from './components/Sidebar';
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 
 function App() {
   let [isLoggedIn,setIsLoggedIn]=useState(true)
   return (
     <>
-     
-
-      <h1>Functional Component Concepts</h1>
-      <hr/>
-      <div className='row'>
-        <div className='col-3'>
-            <Sidebar/>
-        </div>
-        <div className='col me-2'>
+      <div className='container'>
+            <Link  to='/fun' type="button" class="btn btn-primary me-2" > Functional Component</Link>
+            <Link to='/class' type="button" class="btn btn-danger" > Class Component</Link>
+       
+        <div className='row mb-3'>
           <Outlet/>
         </div>
-      </div>
-     
+        </div>
 
 
 

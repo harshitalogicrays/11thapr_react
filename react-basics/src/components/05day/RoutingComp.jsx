@@ -18,29 +18,41 @@ import FormValidations from '../07day/FormValidations'
 import ReactHookform from '../08day/ReactHookform'
 import Counter from '../08day/Counter'
 import RandomNumGenerator from '../08day/RandomNumGenerator'
+import RefDemoinFun from '../09day/RefDemoinFun'
+import Usememohook from '../09day/Usememohook'
+import FunRouting from '../FunRouting'
+import ClassRounting from '../ClassRounting'
+import ClassComp from '../09day/ClassComp'
 
 const RoutingComp = () => {
   return (
     <>
     <Routes>
         <Route path='/' element={<App/>}>
-            <Route path='' element={<Propsdemo/>}></Route>
-            <Route path='event' element={<EventsDemo/>}></Route>
-            <Route path='state' element={<Stateinfun/>}></Route>
-            <Route path='condition' element={<ConditionalRendering/>}>
-                <Route path='cal' element={<Calculator/>}/>
+            <Route path='/fun' element={<FunRouting/>}>
+                <Route path='' element={<Propsdemo/>}></Route>
+                <Route path='event' element={<EventsDemo/>}></Route>
+                <Route path='state' element={<Stateinfun/>}></Route>
+                <Route path='condition' element={<ConditionalRendering/>}>
+                    <Route path='cal' element={<Calculator/>}/>
+                </Route>
+                <Route path='form' element={<Form1/>}></Route>
+                <Route path='list' element={<ListRendering/>}/>
+                <Route path='products' element={<ProductList/>}/>
+                <Route path='product/form' element={<Product01/>}/>
+                <Route path='products/card' element={<ProductData/>}/>
+                <Route path='css' element={<ReactCSS/>}/>
+                <Route path='rb' element={<ReactBootstrapForm/>}/>
+                <Route path='validations' element={<FormValidations/>}/>
+                <Route path='reacthookform' element={<ReactHookform/>}/>
+                <Route path='lifting' element={<Counter/>}/>
+                <Route path='random' element={<RandomNumGenerator/>}/>
+                <Route path='ref' element={<RefDemoinFun/>}/>
+                <Route path='hook/usememo' element={<Usememohook/>}/>
             </Route>
-            <Route path='form' element={<Form1/>}></Route>
-            <Route path='list' element={<ListRendering/>}/>
-            <Route path='products' element={<ProductList/>}/>
-            <Route path='product/form' element={<Product01/>}/>
-            <Route path='products/card' element={<ProductData/>}/>
-            <Route path='css' element={<ReactCSS/>}/>
-            <Route path='rb' element={<ReactBootstrapForm/>}/>
-            <Route path='validations' element={<FormValidations/>}/>
-            <Route path='reacthookform' element={<ReactHookform/>}/>
-            <Route path='lifting' element={<Counter/>}/>
-            <Route path='random' element={<RandomNumGenerator/>}/>
+            <Route path='/class' element={<ClassRounting/>}>
+               <Route path='' element={<ClassComp username="Happy" address="Pune"/>}></Route>
+            </Route>
         </Route>
        
        
