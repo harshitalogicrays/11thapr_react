@@ -1,0 +1,17 @@
+class component - 
+events -
+
+
+rconst - 
+this.state={}
+this.setState({}) 
+==============================================
+class component life cycle - 
+1. Mounting phase 
+2. updated phase 
+3.unmounting phase 
+4. error handling 
+
+pure component 
+
+vite tool 
