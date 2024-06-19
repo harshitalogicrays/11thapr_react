@@ -27,6 +27,8 @@ import EventinClass from '../10day/EventinClass'
 import StateinClass from '../10day/StateinClass'
 import Form1classcomp from '../10day/Form1classcomp'
 import RefDemoinClasss from '../10day/RefDemoinClasss'
+import ComponentLifeCycleMethods from '../11day/ComponentLifeCycleMethods'
+import PureComponentDemo from '../11day/PureComponentDemo'
 
 const RoutingComp = () => {
   return (
@@ -60,6 +62,8 @@ const RoutingComp = () => {
                <Route path='state' element={<StateinClass/>}/>
                <Route path='form' element={<Form1classcomp/>}/>
                <Route path='ref' element={<RefDemoinClasss/>}/>
+               <Route path='lifecycle' element={<ComponentLifeCycleMethods uname="Ram"/>}/>
+               <Route path='pure' element={<PureComponentDemo />}/>
             </Route>
         </Route>
        
