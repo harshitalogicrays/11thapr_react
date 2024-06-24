@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import Image1 from '/src/assets/register.png'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import axios from 'axios'
 const Register = () => {
-  let obj={username:'',email:'',password:'',cpassword:'',role:'1'}
+  let obj={username:'',email:'',password:'',cpassword:'',role:'1',id:Date.now()}
   let [user,setUser] =useState({...obj})
   let [errors,setErrors]=useState({}) 
-
+  const redirect = useNavigate() 
   let validations=()=>{
       let formerrors={}
       let pattern=/^[\w\!\#\$\%\^\&\*\-\+\=\.]+\@[\w]+\.[a-zA-Z]{3}$/
@@ -18,13 +20,37 @@ const Register = () => {
       if(user.cpassword=='' || user.password !=user.cpassword) formerrors.cpwderr="password not match"
       return formerrors
   }
-  let handleSubmit=(e)=>{ 
+  let handleSubmit=async(e)=>{ 
       e.preventDefault()
       let myerrors = validations() 
       if(Object.keys(myerrors).length==0){
           setErrors({})
           setUser({...obj})
-          alert(JSON.stringify(user))}
+        //   alert(JSON.stringify(user))
+        try{
+                // await fetch("https://6678ef690bd45250562056c5.mockapi.io/users",{
+                // method:"POST",
+                // headers:{'content-type':'application/json'},
+                // body:JSON.stringify(user)
+                //  })   
+
+            //    await  axios.post("https://6678ef690bd45250562056c5.mockapi.io/users",user)
+            //     toast.success("registered successfuly")
+            //     redirect('/login')
+
+
+             await fetch("http://localhost:1000/users",{
+                method:"POST",
+                headers:{'content-type':'application/json'},
+                body:JSON.stringify(user)
+                 }) 
+                toast.success("registered successfuly")
+                redirect('/login')
+        }   
+        catch(err){
+            toast.error(err.message)
+        } 
+    }
       else { setErrors(myerrors)  }    
   }
 return (
