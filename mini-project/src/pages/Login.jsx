@@ -2,11 +2,45 @@ import React from 'react'
 import { Button, Col, Container, Form, Image, Row } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import LoginImg from '/src/assets/login.png'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import axios from 'axios'
 const Login = () => {
   const {register,handleSubmit, formState: { errors }, trigger} = useForm()
-    let submitData=(user)=>{
-        alert(JSON.stringify(user))
+  const redirect = useNavigate()
+    let submitData=async(user)=>{
+      try{
+        // let res = await fetch(`https://6678ef690bd45250562056c5.mockapi.io/users?email=${user.email}`)
+        // let data = await res.json()
+      //   if(data[0].password == user.password){
+      //     redirect('/')
+      // }
+      // else  {
+      //   toast.error("Invalid Credentials")
+      // }
+
+      //axios
+        let res = await axios.get(`https://6678ef690bd45250562056c5.mockapi.io/users?email=${user.email}`)
+        if(res.data[0].password == user.password){
+            if(res.data[0].role=="0"){
+                toast.success("loggedIn successfully")
+                redirect('/admin')
+            }
+            else if(res.data[0].role=="1"){
+              toast.success("loggedIn successfully")
+              redirect('/')
+            }
+
+            let obj = {isLoggedIn:true, email:res.data[0].email,name:res.data[0].username,role:res.data[0].role}
+            sessionStorage.setItem("11aprmini",JSON.stringify(obj))
+          }
+          else  {
+            toast.error("Invalid Credentials")
+          }     
+      }
+      catch(err){
+        toast.error("Invalid Credentials")
+      }
     }
   return (  
     <Container className="col-8 shadow mt-5 p-3">

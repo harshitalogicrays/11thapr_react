@@ -5,6 +5,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import PageNotFound from "./pages/PageNotFound";
 import ProductData from "./features/ProductData";
+import AdminLayout from "./features/Admin/AdminLayout";
+import Dashboard from "./features/Admin/Dashboard";
 
 const allroutes = createBrowserRouter([
     { path: "/", element: <App /> , 
@@ -13,6 +15,11 @@ const allroutes = createBrowserRouter([
             {path:'login',element:<Login/>},
             {path:'register',element:<Register/>},
             {path:'products',element:<ProductData/>},
+        ]
+     },
+     {path:'/admin',element:<AdminLayout/>,
+        children:[
+            {path:'',element:<Dashboard/>},
         ]
      },
      {path:'*',element:<PageNotFound/>}

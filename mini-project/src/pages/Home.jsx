@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 
 const Home = () => {
 const [users,setUsers]=useState([])
-  useEffect(()=>{getData() },[])
+  // useEffect(()=>{getData() },[])
 
   // let getData=()=>{
   //   fetch("https://jsonplaceholder.typicode.com/users")
@@ -59,21 +59,22 @@ const [users,setUsers]=useState([])
   //   }
   // }
 
-  let getData=async()=>{
-    try{
-      let res = await axios.get('http://localhost:1000/users')
-      console.log(res)
-      setUsers(res.data)
-    }
-    catch(err){
-      console.log(err)
-    }
-  }
+  // let getData=async()=>{
+  //   try{
+  //     let res = await axios.get('http://localhost:1000/users')
+  //     console.log(res)
+  //     setUsers(res.data)
+  //   }
+  //   catch(err){
+  //     console.log(err)
+  //   }
+  // }
   return (
+    
    <>
     <h1>Home Page</h1>
-    {users.length==0 && <h1>No user found</h1>}
-    {users.map((user,i)=><h1>{user.name}</h1>)}
+    {/* {users.length==0 && <h1>No user found</h1>}
+    {users.map((user,i)=><h1>{user.name}</h1>)} */}
     {/* {users.map((user,i)=><h1>{user.firstName}</h1>)} */}
    </>
   )
