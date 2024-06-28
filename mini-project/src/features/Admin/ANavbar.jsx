@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { NavLink } from 'react-router-dom';
-import {  BsHouse } from "react-icons/bs";
-import { Logout } from '../hiddenlinks';
+import { NavLink, useNavigate } from 'react-router-dom';
+import {  BsArrowLeftCircle, BsHouse } from "react-icons/bs";
+import { toast } from 'react-toastify';
 
 const ANavbar = () => {
   const [username,setUsername]=useState('Guest')
@@ -18,6 +18,13 @@ const ANavbar = () => {
       setUsername('Guest')
     }
   },[sessionStorage.getItem("11aprmini")])
+
+  const navigate=useNavigate()
+  let handleLogout=()=>{
+    sessionStorage.removeItem("11aprmini")
+    toast.success("loggedout successfully")
+    navigate('/')    
+}
   return (
     <Navbar expand="lg"  bg="dark" data-bs-theme="dark">
     <Container fluid>
@@ -35,7 +42,7 @@ const ANavbar = () => {
                   </Nav>
         <Nav>
             <Nav.Link >Welcome {username}</Nav.Link>
-           <Nav.Link><Logout/></Nav.Link>
+            <Nav.Link onClick={handleLogout}><BsArrowLeftCircle />Logout</Nav.Link>
         </Nav>
 
       </Navbar.Collapse>

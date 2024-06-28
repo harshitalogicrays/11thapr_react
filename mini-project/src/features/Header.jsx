@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { BsArrowLeftCircle, BsHouse } from "react-icons/bs";
 import { FaLock, FaPenAlt } from 'react-icons/fa';
-import { Logout, ShowOnLogin, ShowOnLogout } from './hiddenlinks';
+import {  ShowOnLogin, ShowOnLogout } from './hiddenlinks';
+import { toast } from 'react-toastify';
 const Header = () => {
   const [username,setUsername]=useState('Guest')
   useEffect(()=>{
@@ -19,6 +20,13 @@ const Header = () => {
     }
   },[sessionStorage.getItem("11aprmini")])
 
+
+  const navigate=useNavigate()
+  let handleLogout=()=>{
+    sessionStorage.removeItem("11aprmini")
+    toast.success("loggedout successfully")
+    navigate('/')    
+}
   return (
     <Navbar expand="lg"  bg="dark" data-bs-theme="dark">
     <Container fluid>
@@ -60,7 +68,7 @@ const Header = () => {
           </ShowOnLogout>
           <ShowOnLogin>
             <Nav.Link >Welcome {username}</Nav.Link>
-           <Nav.Link><Logout/></Nav.Link>
+           <Nav.Link onClick={handleLogout}><BsArrowLeftCircle />Logout</Nav.Link>
           </ShowOnLogin>
         </Nav>
 

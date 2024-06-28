@@ -1,19 +1,4 @@
-import { BsArrowLeftCircle } from "react-icons/bs"
-import { useNavigate } from "react-router-dom"
-import { toast } from "react-toastify"
-
-export const Logout=()=>{
-    const navigate=useNavigate()
-    let handleLogout=()=>{
-            sessionStorage.removeItem("11aprmini")
-            toast.success("loggedout successfully")
-            navigate('/')    
-    }
-    return(
-        <> <span onClick={handleLogout}> <BsArrowLeftCircle />Logout </span>
-        </>
-    )
-}
+import { Navigate } from "react-router-dom"
 
 export const ShowOnLogout=({children})=>{
     if(sessionStorage.getItem('11aprmini') == null){
@@ -27,4 +12,22 @@ export const ShowOnLogin=({children})=>{
         return children
     }
     else return null
+}
+
+export const ProtectedAdmin=({children})=>{
+    if(sessionStorage.getItem('11aprmini') != null){
+        let obj = JSON.parse(sessionStorage.getItem('11aprmini'))
+        if(obj.isLoggedIn && obj.role=='0') return children
+        else return <Navigate to='/' replace={true} />
+    }
+    else return <Navigate to='/login' replace={true} />
+}
+
+export const Protected=({children})=>{
+    if(sessionStorage.getItem('11aprmini') != null){
+        let obj = JSON.parse(sessionStorage.getItem('11aprmini'))
+        if(obj.isLoggedIn && obj.role=='1') return children
+        else return <Navigate to='/' replace={true} />
+    }
+    else return <Navigate to='/login' replace={true} />
 }

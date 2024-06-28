@@ -3,7 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import { NavLink } from 'react-router-dom';
 const Sidebar = () => {
   let mylinks = [
-    {as:NavLink,to:'/admin',text:'Dashborad'},
+    {as:NavLink,to:'/admin/dash',text:'Dashborad'},
     {as:NavLink,to:'/admin/add',text:'Add Product'},
     {as:NavLink,to:'/admin/view',text:'View Products'},
   ]
