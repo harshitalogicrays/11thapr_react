@@ -1,0 +1,36 @@
+Props - 
+  <h1 id="" className='' name=''>Props demo</h1> => id, name,className => html attribute ->DOM properties
+
+  <PropsDemo username="happy" address="pune"></PropsDemo>
+  username and happy - properties (props)
+
+  props -> pass from parent to children
+
+  props readonly
+
+  children props  - 
+
+  <div>
+    <h1></h1>
+    <p></p>
+  </div> 
+
+
+  ==================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

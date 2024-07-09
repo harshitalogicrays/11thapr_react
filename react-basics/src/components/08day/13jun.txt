@@ -1,0 +1,40 @@
+react hook form - 
+
+required 
+min 
+max 
+minlength 
+maxlength
+pattern 
+validate 
+
+=============================================================
+
+formik library 
+======================================================
+parent ---> child --> via props
+
+child to parent - not allowed 
+we want to change value of state variable of parent Component from child Component
+
+Lifting the state up - 
+
+Counter Component  -  count value 
+Increase Component - button --> click  --> parent count increase by 1
+                     button ---> click --> parent count increase by 5
+
+=====================================================================================
+code optimization - 
+useCallback hook - useCallback is a React Hook that lets you cache a function definition between re-renders.
+
+memoization  - 
+useMemo hook - useMemo is a React Hook that lets you cache the result of a calculation between re-renders.
+
+useEffect hook  
+useRef hook 
+
+
+random no of length 8 - display in textbox when we load the Component in the DOM.
+
+
+================================================================

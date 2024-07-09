@@ -1,0 +1,40 @@
+conditional rendering - 
+1. if else 
+2. javascript element 
+3. ternary operator  (?:) condition ? true : false 
+4. short circuit operator - (&&) condition && true
+
+list rendering -
+
+
+let add=(a,b)=>a+b
+
+let add1=(a,b)=>{return a+b}
+
+======================================================================
+CSS in react - 
+1. inline css 
+    <h1 style="color:red;background-color:yellow"></h1>
+
+    <h1 style={{color:'red',backgroundColor:'yellow'}}></h1>
+
+2. css variable 
+let cssvar={}
+<h1 style={cssvar}></h1>
+
+3. css file - .css 
+import 'path'
+css works as global css .
+imported in comp. then all children can access that css without importing.
+
+4. module css - .module.css
+
+import cssmodule from 'path'
+<h1 className={cssmodule.classname}></h1>
+we have to import it whereever we want to use it.
+
+5. bootstrap
+6. react-bootstrap 
+7. styled-components 
+
+form validations - 

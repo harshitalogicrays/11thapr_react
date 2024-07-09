@@ -1,0 +1,40 @@
+
+image display - 
+
+Fragment  - container /wrapper
+<React.Fragment></React.Fragment>
+
+import React,{Fragment} from 'react'
+<Fragment></Fragment>
+
+<></>
+
+defaultProps and PropsTypes  -  npm i prop-types
+
+state variable  -
+
+function component -> 
+useState() => react hooks
+useState - to create variable
+useEffect
+useReducer
+useRef
+useContext 
+useLayoutEffect
+useCallback
+useMemo etc.
+custom hooks 
+
+=======================================================
+
+form design and state use 
+conditional rendering - 
+
+
+
+
+
+
+
+
+

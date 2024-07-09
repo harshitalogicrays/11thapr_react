@@ -1,0 +1,31 @@
+input id="num"
+
+let n =  document.getElementById("num")
+
+1. controlled - react manages it (state and onchange)
+    useState hook
+    state - variable and initialze the value
+
+2. uncontrolled - DOM manages it 
+    useRef() hook
+    hold reference of the control
+    return current property
+
+useRef hook - 
+select()
+
+forwardRef 
+====================================================
+useCallback and useMemo - 
+useMemo - 
+
+===================================================
+class Components - 
+props pass
+event 
+state 
+form 
+ref 
+
+life cycle methods 
+pure class Component
