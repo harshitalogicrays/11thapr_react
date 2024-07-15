@@ -1,5 +1,7 @@
 import './App.css'
 import Add from './features/Add'
+import Filters1 from './features/Filters'
+import Products from './features/Products'
 import View from './features/View'
 
 function App() {
@@ -10,16 +12,19 @@ function App() {
     </h1> */}
 
 
-    <div class="flex">
+    {/* <div class="flex">
       <div class="flex-1 flex-col w-64 ...">
       <Add/>
       </div>
       <div class="flex-1 flex-col w-64 ...">
       <View/> 
       </div>
-    </div>
+    </div> */}
      
+
+     {/* <Products/> */}
       
+      <Filters1/>
     </>
   ) 
 }

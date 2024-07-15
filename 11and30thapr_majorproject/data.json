@@ -1,0 +1,26 @@
+{
+  "users": [
+    {
+      "id": "69e7",
+      "username": "happy",
+      "email": "happy@gmail.com",
+      "password": "happy123",
+      "cpassword": "happy123",
+      "role": "1",
+      "createdAt": 1721016432163
+    },
+    {
+      "id": "4530",
+      "username": "Admin",
+      "email": "admin@gmail.com",
+      "password": "admin123",
+      "cpassword": "admin123",
+      "role": "0",
+      "createdAt": 1721016458257
+    }
+  ],
+  "products": [],
+  "slider": [],
+  "orders": [],
+  "cart": []
+}
