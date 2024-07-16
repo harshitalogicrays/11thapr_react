@@ -1,9 +1,7 @@
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Button, Col, Container, Form, Row,Image } from 'react-bootstrap'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { fetchdatabyid, postdata, updatedata } from './productapi.js'
 
 const AddProduct = () => {
     let initialvalues = {category:'',name:'',brand:'',stock:'',price:'',image:'',desc:''}
@@ -12,53 +10,13 @@ const AddProduct = () => {
      const navigate=useNavigate()
 
     let handleImage=(e)=>{
-        let file = e.target.files[0]
-        const reader=new FileReader()
-        reader.readAsDataURL(file)
-        reader.onload=()=>{
-            setProduct({...product,image:reader.result})
-        }
+       
     } 
 
-//edit 
-    const {id}=useParams() //params = {id:5}
-    console.log(id)
-    useEffect(()=>{
-        if(id){
-                fetchdatabyid(id).then((res)=>{
-                    console.log(res.data)
-                    setProduct(res.data)
-                })
-        }
-        else {
-            setProduct({...initialvalues})
-        }
-    },[id])
-
+    
     let handleSubmit=async(e)=>{
         e.preventDefault()
-        if(!id){ //add
-            try{
-                // await axios.post("https://6678ef690bd45250562056c5.mockapi.io/products",product)
-                await postdata(product)
-                toast.success("product added")
-                navigate('/admin/view')
-            }
-              catch(err){
-                toast.error(err)
-              }
-        }
-        else { //update
-            try{
-                await updatedata(product,id)
-                toast.success("product updated")
-                navigate('/admin/view')
-            }
-              catch(err){
-                toast.error(err)
-              }
-        }
-    
+           
     }
 
 
@@ -66,7 +24,7 @@ const AddProduct = () => {
 
   return (
     <Container className='shadow mt-2 p-2'>
-    <h1>{id?"Edit ":"Add "} Product</h1> <hr/>
+    <h1>Add Product</h1> <hr/>
    <Form onSubmit={handleSubmit}>
        <Form.Group className='mb-2'>
            <Form.Label >Category</Form.Label>
@@ -99,12 +57,11 @@ const AddProduct = () => {
            <Form.Label>Choose File</Form.Label>
            <Form.Control type="file" name="image" onChange={handleImage}></Form.Control>
        </Form.Group>
-       {id && <img src={product.image} height='100px' width={100} />}
        <Form.Group className='mb-2'>
            <Form.Label>Description</Form.Label>
            <Form.Control as="textarea" name="desc" onChange={(e)=>setProduct({...product,desc:e.target.value})} value={product.desc}></Form.Control>
        </Form.Group>
-       <Button type="submit">{id? "Update Product" :"Add Product"}</Button>
+       <Button type="submit">Add Product</Button>
    </Form>
 </Container>
   )

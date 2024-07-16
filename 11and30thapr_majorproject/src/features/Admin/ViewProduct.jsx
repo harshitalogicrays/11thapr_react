@@ -1,31 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Table } from 'react-bootstrap'
-import { deleteData, fetchdata } from './productapi.js'
 import { FaPenAlt, FaTrashAlt } from 'react-icons/fa'
 import { toast } from 'react-toastify'
 import { Link } from 'react-router-dom'
 
 const ViewProduct = () => {
   const [product,setProduct]=useState([])
-  let getData=async()=>{
-    try{
-      let res = await fetchdata()
-       setProduct(res.data)
-    }
-    catch(err){toast.error(err)} 
-  }
-
-  useEffect(()=>{getData()},[])
-
+ 
   let handleDelete=async(id)=>{
-    if(window.confirm('are you sure to delete this??')){
-      try{
-          await deleteData(id)
-          toast.success("product deleted")
-          getData()
-      }
-      catch(err){toast.error(err)}
-    }
+    
   }
 
   return (

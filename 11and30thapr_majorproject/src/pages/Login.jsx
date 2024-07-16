@@ -15,7 +15,7 @@ const Login = () => {
     let submitData=async(user)=>{
       try{
         setIsLoading(true)
-        let res = await fetch(`http://localhost:1000/users?email=${user.email}`)
+        let res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/users?email=${user.email}`)
         let data = await res.json()
         if(data[0].password == user.password){
             if(data[0].role=='0'){

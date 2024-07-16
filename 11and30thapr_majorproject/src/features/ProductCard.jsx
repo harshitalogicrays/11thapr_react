@@ -1,11 +1,9 @@
 import React from 'react'
-import { useContext } from 'react'
-import { MyContext } from './ContextData'
 
 const ProductCard = ({product}) => {
-  const data = useContext(MyContext)
+
   let handleClick=()=>{
-      data.addtocart(product)
+
   }
   return (
     <div className='col-3'>

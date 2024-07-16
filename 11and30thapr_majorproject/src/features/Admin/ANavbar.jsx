@@ -5,26 +5,30 @@ import Navbar from 'react-bootstrap/Navbar';
 import { NavLink, useNavigate } from 'react-router-dom';
 import {  BsArrowLeftCircle, BsHouse } from "react-icons/bs";
 import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
+import { LOGOUT_USER, selectIsLoggedIn, selectUserName } from '../../redux/authSlice';
 
 const ANavbar = () => {
-  const [username,setUsername]=useState('Guest')
-  useEffect(()=>{
-    if(sessionStorage.getItem("11aprmini") != null){
-      let obj =JSON.parse(sessionStorage.getItem("11aprmini"))
-      console.log(obj)
-      setUsername(obj.name)
-    }
-    else {
-      setUsername('Guest')
-    }
-  },[sessionStorage.getItem("11aprmini")])
-
-  const navigate=useNavigate()
-  let handleLogout=()=>{
-    sessionStorage.removeItem("11aprmini")
-    toast.success("loggedout successfully")
-    navigate('/')    
-}
+  const dispatch=useDispatch()
+  const [username,setUsername]=useState('Guest')  
+  const data=useSelector(selectUserName)
+  const isLoggedIn=useSelector(selectIsLoggedIn)
+   useEffect(()=>{
+     if(data != null){
+       setUsername(data)
+     }
+     else {
+       setUsername('Guest')
+     }
+   },[isLoggedIn])
+ 
+ 
+   const navigate=useNavigate()
+   let handleLogout=()=>{
+       dispatch(LOGOUT_USER())
+       toast.success("loggedout successfully")
+       navigate('/')    
+ }
   return (
     <Navbar expand="lg"  bg="dark" data-bs-theme="dark">
     <Container fluid>

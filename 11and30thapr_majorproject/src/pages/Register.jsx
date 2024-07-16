@@ -29,7 +29,7 @@ const Register = () => {
           setUser({...obj})
         try{
            setIsLoading(true)
-             await fetch("http://localhost:1000/users",{
+             await fetch(`${import.meta.env.VITE_BACKEND_URL}/users`,{
                 method:"POST",
                 headers:{'content-type':'application/json'},
                 body:JSON.stringify({...user,createdAt:Date.now()})
