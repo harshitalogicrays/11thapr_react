@@ -22,5 +22,6 @@
   "products": [],
   "slider": [],
   "orders": [],
-  "cart": []
+  "cart": [],
+  "category":[]
 }

@@ -5,14 +5,15 @@ import Navbar from 'react-bootstrap/Navbar';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { BsArrowLeftCircle, BsHouse } from "react-icons/bs";
 import { FaLock, FaPenAlt, FaShoppingCart } from 'react-icons/fa';
-import {  ShowOnLogin, ShowOnLogout } from './hiddenlinks';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
-import { LOGOUT_USER, selectUserName } from '../redux/authSlice';
+import { LOGOUT_USER, selectIsLoggedIn, selectUserName, selectUserRole } from '../redux/authSlice';
 const Header = () => {
   const dispatch=useDispatch()
  const [username,setUsername]=useState('Guest')
  const data=useSelector(selectUserName)
+ const isLoggedIn=useSelector(selectIsLoggedIn)
+const role=useSelector(selectUserRole)
   useEffect(()=>{
     if(data != null){
       setUsername(data)
@@ -20,14 +21,14 @@ const Header = () => {
     else {
       setUsername('Guest')
     }
-  },[data])
+  },[isLoggedIn])
 
 
   const navigate=useNavigate()
   let handleLogout=()=>{
       dispatch(LOGOUT_USER())
-    toast.success("loggedout successfully")
-    navigate('/')    
+      toast.success("loggedout successfully")
+      navigate('/')    
 }
   return (
     <Navbar expand="lg"  bg="dark" data-bs-theme="dark">
@@ -52,8 +53,18 @@ const Header = () => {
                   }}>Products</Nav.Link>
         </Nav>
         <Nav>
-          <ShowOnLogout>
-                <Nav.Link as={NavLink} to='/login'   style={({ isActive}) => {
+
+        {role != '0' &&   <Nav.Link as={NavLink} to='/cart'><FaShoppingCart size={30}/><span
+              class="badge rounded-pill text-bg-danger">{0}</span>
+        </Nav.Link>}
+          {isLoggedIn ? 
+          <>
+           <Nav.Link >Welcome {username}</Nav.Link>
+           <Nav.Link onClick={handleLogout}><BsArrowLeftCircle />Logout</Nav.Link>
+          </>      
+          :
+          <>
+           <Nav.Link as={NavLink} to='/login'   style={({ isActive}) => {
                           return {
                             fontWeight: isActive ? "bold" : "",
                             color: isActive ? "red" : "",
@@ -67,16 +78,11 @@ const Header = () => {
                             backgroundColor: isActive ? "yellow" : "",
                           };
                         }}><FaPenAlt/> Register</Nav.Link>
-          </ShowOnLogout>
-          <ShowOnLogin>
 
-            <Nav.Link as={NavLink} to='/cart'><FaShoppingCart size={30}/><span
-              class="badge rounded-pill text-bg-danger">{0}</span>
-             </Nav.Link>
-            
-            <Nav.Link >Welcome {username}</Nav.Link>
-           <Nav.Link onClick={handleLogout}><BsArrowLeftCircle />Logout</Nav.Link>
-          </ShowOnLogin>
+          </>
+          }
+               
+          
         </Nav>
 
       </Navbar.Collapse>

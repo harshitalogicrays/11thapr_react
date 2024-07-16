@@ -2,21 +2,6 @@ import { useSelector } from "react-redux"
 import { Navigate } from "react-router-dom"
 import { selectIsLoggedIn } from "../redux/authSlice"
 
-export const ShowOnLogout=({children})=>{
-    const isLoading=useSelector(selectIsLoggedIn)
-    if(isLoading){
-        return children
-    }
-    else return null
-}
-
-export const ShowOnLogin=({children})=>{
-    const isLoading=useSelector(selectIsLoggedIn)
-    if(isLoading==false){
-        return children
-    }
-    else return null
-}
 
 export const ProtectedAdmin=({children})=>{
     if(sessionStorage.getItem('11aprmini') != null){
