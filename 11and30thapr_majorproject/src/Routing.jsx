@@ -13,6 +13,8 @@ import AddProduct from "./features/Admin/AddProduct";
 import ViewProduct from "./features/Admin/ViewProduct";
 import AddCategory from "./features/Admin/AddCategory";
 import ViewCategory from "./features/Admin/ViewCategory";
+import AddSlider from "./features/Admin/AddSlider";
+import ViewSlider from "./features/Admin/ViewSlider";
 
 const allroutes = createBrowserRouter([
     { path: "/", element: <App /> , 
@@ -24,11 +26,15 @@ const allroutes = createBrowserRouter([
             {path:'cart',element:<Cart/>},
         ]
      },
-     {path:'/admin',element:<ProtectedAdmin><AdminLayout/></ProtectedAdmin>,
+     {path:'/admin',element:<AdminLayout/>,
         children:[
             {path:'dash',element:<Dashboard/>},
             {path:'add/category',element:<AddCategory/>},
+            {path:'edit/category/:id',element:<AddCategory/>},
             {path:'view/category',element:<ViewCategory/>},
+            {path:'add/slider',element:<AddSlider/>},
+            {path:'edit/slider/:id',element:<AddSlider/>},
+            {path:'view/slider',element:<ViewSlider/>},
             {path:'add/product',element:<AddProduct/>},
             {path:'view/product',element:<ViewProduct/>},
         ]

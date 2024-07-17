@@ -1,30 +1,58 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Card, Form } from 'react-bootstrap'
-import { Link, useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { selectCategories } from '../../redux/categorySlice'
 
 const AddCategory = () => {
     const redirect=useNavigate()
     let [category,setCategory]=useState({name:'',desc:"",isActive:false})
+
+//edit
+    const {id}=useParams()
+    const categories = useSelector(selectCategories)
+    const categoryEdit = categories.find(item=>item.id==id)
+    useEffect(()=>{
+        if(id){ setCategory({...categoryEdit})}
+        else {
+            setCategory({name:'',desc:"",isActive:false})}
+    },[id])
+
     let handleSubmit=async(e)=>{
         e.preventDefault()
-        try{
-            await fetch(`${import.meta.env.VITE_BACKEND_URL}/category`,{
-                method:"POST",
-                headers:{'content-type':'application/json'},
-                body:JSON.stringify({...category,createdAt:Date.now()})
-                 }) 
-                toast.success("category added")
-                redirect('/admin/view/category')
+        if(!id){
+            try{
+                await fetch(`${import.meta.env.VITE_BACKEND_URL}/category`,{
+                    method:"POST",
+                    headers:{'content-type':'application/json'},
+                    body:JSON.stringify({...category,createdAt:Date.now()})
+                     }) 
+                    toast.success("category added")
+                    redirect('/admin/view/category')
+            }
+            catch(error){toast.error(error)}
         }
-        catch(error){toast.error(error)}
+        else {
+            try{
+                await fetch(`${import.meta.env.VITE_BACKEND_URL}/category/${id}`,{
+                    method:"PUT",
+                    headers:{'content-type':'application/json'},
+                    body:JSON.stringify({...category,createdAt:categoryEdit.createdAt,editedAt:Date.now()})
+                     }) 
+                    toast.success("category updated")
+                    redirect('/admin/view/category')
+            }
+            catch(error){toast.error(error)}
+        }
+       
        
     }
   return (
     <>
         <Card className='mt-4'>
             <Card.Header>
-                <h1>Add Category 
+                <h1>{id? "Edit " :"Add "} Category 
                     <Link type="button" class="btn btn-primary float-end btn-lg "  
                     to='/admin/view/category'>View Categories</Link>
                 </h1>
@@ -47,7 +75,7 @@ const AddCategory = () => {
                     onClick={(e)=>setCategory({...category,isActive:!category.isActive})} 
                     checked={category.isActive}/>
                     </div><br/>
-                    <Button type="submit">Add</Button>
+                    <Button type="submit">{id? "Update" : "Add"} </Button>
                 </Form>
             </Card.Body>
         </Card>

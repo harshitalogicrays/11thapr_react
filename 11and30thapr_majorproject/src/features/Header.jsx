@@ -8,6 +8,7 @@ import { FaLock, FaPenAlt, FaShoppingCart } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOGOUT_USER, selectIsLoggedIn, selectUserName, selectUserRole } from '../redux/authSlice';
+import { Button } from 'react-bootstrap';
 const Header = () => {
   const dispatch=useDispatch()
  const [username,setUsername]=useState('Guest')

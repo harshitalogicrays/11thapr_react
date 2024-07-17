@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import {  BsArrowLeftCircle, BsHouse } from "react-icons/bs";
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOGOUT_USER, selectIsLoggedIn, selectUserName } from '../../redux/authSlice';
 
-const ANavbar = () => {
+const ANavbar = ({ toggleSidebar }) => {
   const dispatch=useDispatch()
   const [username,setUsername]=useState('Guest')  
   const data=useSelector(selectUserName)
@@ -30,6 +30,7 @@ const ANavbar = () => {
        navigate('/')    
  }
   return (
+    <>
     <Navbar expand="lg"  bg="dark" data-bs-theme="dark">
     <Container fluid>
       <Navbar.Brand href="#home">mini-project</Navbar.Brand>
@@ -51,7 +52,34 @@ const ANavbar = () => {
 
       </Navbar.Collapse>
     </Container>
-  </Navbar>
+   </Navbar>
+ 
+  {/* <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <div className="container-fluid">
+                <button
+                    className="btn btn-primary me-2"
+                    type="button"
+                    onClick={toggleSidebar}
+                >
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+                <a className="navbar-brand" href="/">Admin Panel</a>
+                <div className="collapse navbar-collapse justify-content-end">
+                    <ul className="navbar-nav">
+                        <li className="nav-item">
+                            <Link to="/dashboard" className="nav-link">Dashboard</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link to="/users" className="nav-link">Users</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link to="/settings" className="nav-link">Settings</Link>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav> */}
+  </>
   )
 }
 
