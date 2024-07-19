@@ -7,39 +7,51 @@ import { toast } from 'react-toastify'
 import Loader from '../features/Loader'
 import { useDispatch } from 'react-redux'
 import { LOGIN_USER } from '../redux/authSlice'
+import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
+import { auth, db } from '../firebase/config'
+import { doc, getDoc, setDoc, Timestamp } from 'firebase/firestore'
+import { FaGoogle } from 'react-icons/fa'
+import { GoogleAuthProvider } from 'firebase/auth'
 const Login = () => {
   const {register,handleSubmit, formState: { errors }, trigger} = useForm()
   let [isLoading,setIsLoading]=useState(false)
   const redirect = useNavigate()
   const dispatch=useDispatch()
     let submitData=async(user)=>{
-      try{
-        setIsLoading(true)
-        let res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/users?email=${user.email}`)
-        let data = await res.json()
-        if(data[0].password == user.password){
-            if(data[0].role=='0'){
-              redirect('/admin')
-            }
-            else {
-              redirect('/')
-            }
-            let obj = {email:data[0].email,name:data[0].username,role:data[0].role,id:data[0].id}
-            dispatch(LOGIN_USER(obj))
-          toast.success("loggedIn successfully")
-          setIsLoading(false)
-      }
-      else  {
+      setIsLoading(true)
+      signInWithEmailAndPassword(auth, user.email, user.password)
+      .then(async(userCredential) => {
+           const user1 = userCredential.user;
+           const docRef = doc(db,"users",user1.uid)
+          const docSnap = await getDoc(docRef)
+          if(docSnap.exists()){
+            // console.log(docSnap.data())
+            if(docSnap.data().role=="0") redirect('/admin')
+            else if(docSnap.data().role=="1") redirect('/')
+          }
+           toast.success("loggedIn successfully")
+           setIsLoading(false)
+          
+      })
+      .catch((error) => {
         setIsLoading(false)
-        toast.error("Invalid Credentials")
-      }
-   
-      }
-      catch(err){
-        setIsLoading(false)
-        toast.error("Invalid Credentials")
-      }
-    }
+        toast.error(error.message)
+      });
+     }
+     const provider = new GoogleAuthProvider();
+     let loginwithgoogle=()=>{
+      signInWithPopup(auth, provider)
+      .then(async(result) => {
+          const user = result.user;
+        //  console.log(user)
+        const docRef = doc(db,"users",user.uid)
+        await setDoc(docRef,{username:user.displayName,email:user.email,role:'1',createdAt:Timestamp.now().toMillis()})
+        toast.success("loggedIn successfully")
+        redirect('/')
+      }).catch((error) => {
+        toast.error(error.message)
+      });
+     }
   return (  
     <>
     {isLoading && <Loader/>}
@@ -67,8 +79,15 @@ const Login = () => {
                         {errors.password && <span className='text-danger'>
                             {errors.password.message}</span>}
                     </Form.Group>
-
-                    <Button type="submit">Login</Button>
+                          <div class="d-grid gap-2">
+                          <Button type="submit">Login</Button>
+                          </div>
+                          <hr/>
+                          <div class="d-grid gap-2">
+                          <Button type="button" variant='secondary' onClick={loginwithgoogle}>
+                            <FaGoogle/> Login  with google</Button>
+                          </div>
+                    
                     <p>Create an account?? <Link to='/register'>Register</Link></p>
                 </Form>
             </Col>

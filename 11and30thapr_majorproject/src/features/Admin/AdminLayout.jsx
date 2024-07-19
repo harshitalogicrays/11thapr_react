@@ -7,7 +7,7 @@ import { ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 import './Sidebar.css'
 const AdminLayout = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -15,6 +15,11 @@ const AdminLayout = () => {
 
 const closeSidebar = () => {
     setIsSidebarOpen(false);
+};
+
+const contentStyle = {
+  transition: 'margin-left 0.3s',
+  marginLeft: isSidebarOpen ? '250px' : '0',
 };
   return (
     <>
@@ -24,21 +29,15 @@ const closeSidebar = () => {
       closeOnClick rtl={false} pauseOnFocusLoss={false}
       draggable pauseOnHover={false} theme="colored"
       />
-        <ANavbar toggleSidebar={toggleSidebar} />
-        <Row>
-        <Col xs={3}>  <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} /></Col>
-        <Col><Outlet/> </Col>
-        </Row>
-           {/* <div className="d-flex">
+           <div className="d-flex">
             <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />
-            <div className={`flex-grow-1`}>
+            <div className={`flex-grow-1 `}>
            
                 <ANavbar toggleSidebar={toggleSidebar} />
-                <div className="container-fluid p-4">
+                <div style={contentStyle} className='p-4'>
                    <Outlet/>
-                </div>
-            </div>
-        </div> */}
+                </div>   </div>
+      </div>
     </>
   )
 }

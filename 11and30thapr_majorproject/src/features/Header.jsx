@@ -7,29 +7,38 @@ import { BsArrowLeftCircle, BsHouse } from "react-icons/bs";
 import { FaLock, FaPenAlt, FaShoppingCart } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
-import { LOGOUT_USER, selectIsLoggedIn, selectUserName, selectUserRole } from '../redux/authSlice';
+import { LOGIN_USER, LOGOUT_USER, selectIsLoggedIn, selectUserName, selectUserRole } from '../redux/authSlice';
 import { Button } from 'react-bootstrap';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { auth, db } from '../firebase/config';
+import { doc, getDoc } from 'firebase/firestore';
+import { ShowOnLogin, ShowOnLogout } from './hiddenlinks';
 const Header = () => {
   const dispatch=useDispatch()
- const [username,setUsername]=useState('Guest')
- const data=useSelector(selectUserName)
- const isLoggedIn=useSelector(selectIsLoggedIn)
-const role=useSelector(selectUserRole)
-  useEffect(()=>{
-    if(data != null){
-      setUsername(data)
-    }
-    else {
-      setUsername('Guest')
-    }
-  },[isLoggedIn])
-
-
   const navigate=useNavigate()
+const   username=useSelector(selectUserName)
+  useEffect(()=>{
+    onAuthStateChanged(auth, async(user) => {
+      if (user) {
+       const uid = user.uid;
+       const docRef = doc(db,"users",uid)
+       const docSnap = await getDoc(docRef)
+       let obj={email:docSnap.data().email,name:docSnap.data().username,role:docSnap.data().role,id:uid}
+       dispatch(LOGIN_USER(obj))
+      } else {
+       dispatch(LOGOUT_USER())
+      }
+    });
+  },[auth])
+
   let handleLogout=()=>{
-      dispatch(LOGOUT_USER())
-      toast.success("loggedout successfully")
-      navigate('/')    
+      signOut(auth).then(() => {
+        toast.success("loggedout successfully")
+        navigate('/')  
+      }).catch((error) => {
+        toast.error(error.message)
+      });
+       
 }
   return (
     <Navbar expand="lg"  bg="dark" data-bs-theme="dark">
@@ -55,16 +64,14 @@ const role=useSelector(selectUserRole)
         </Nav>
         <Nav>
 
-        {role != '0' &&   <Nav.Link as={NavLink} to='/cart'><FaShoppingCart size={30}/><span
+        <Nav.Link as={NavLink} to='/cart'><FaShoppingCart size={30}/><span
               class="badge rounded-pill text-bg-danger">{0}</span>
-        </Nav.Link>}
-          {isLoggedIn ? 
-          <>
+        </Nav.Link>
+          <ShowOnLogin>
            <Nav.Link >Welcome {username}</Nav.Link>
            <Nav.Link onClick={handleLogout}><BsArrowLeftCircle />Logout</Nav.Link>
-          </>      
-          :
-          <>
+           </ShowOnLogin>
+           <ShowOnLogout>
            <Nav.Link as={NavLink} to='/login'   style={({ isActive}) => {
                           return {
                             fontWeight: isActive ? "bold" : "",
@@ -79,11 +86,7 @@ const role=useSelector(selectUserRole)
                             backgroundColor: isActive ? "yellow" : "",
                           };
                         }}><FaPenAlt/> Register</Nav.Link>
-
-          </>
-          }
-               
-          
+         </ShowOnLogout>
         </Nav>
 
       </Navbar.Collapse>

@@ -3,6 +3,9 @@ import Image1 from '/src/assets/register.png'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Loader from '../features/Loader'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { auth, db } from '../firebase/config'
+import { doc, setDoc, Timestamp } from 'firebase/firestore'
 const Register = () => {
   let obj={username:'',email:'',password:'',cpassword:'',role:'1'}
   let [user,setUser] =useState({...obj})
@@ -21,27 +24,25 @@ const Register = () => {
       if(user.cpassword=='' || user.password !=user.cpassword) formerrors.cpwderr="password not match"
       return formerrors
   }
-  let handleSubmit=async(e)=>{ 
+  let handleSubmit=(e)=>{ 
       e.preventDefault()
       let myerrors = validations() 
       if(Object.keys(myerrors).length==0){
           setErrors({})
           setUser({...obj})
-        try{
            setIsLoading(true)
-             await fetch(`${import.meta.env.VITE_BACKEND_URL}/users`,{
-                method:"POST",
-                headers:{'content-type':'application/json'},
-                body:JSON.stringify({...user,createdAt:Date.now()})
-                 }) 
-                toast.success("registered successfully")
-                redirect('/login')
-                setIsLoading(false)
-        }   
-        catch(err){
-            setIsLoading(false)
-            toast.error(err.message)
-        } 
+           createUserWithEmailAndPassword(auth, user.email, user.password)
+            .then(async(userCredential) => {
+                 const user1 = userCredential.user;
+                // console.log(user1)
+                    const docRef = doc(db,"users",user1.uid)
+                    await setDoc(docRef,{...user,createdAt:Timestamp.now().toMillis()})
+                    setIsLoading(false)
+                    toast.success("loggedIn Successfully")
+                    redirect('/')
+            })
+            .catch((error) => { toast.error(err.message);  setIsLoading(false)
+            });
     }
       else { setErrors(myerrors)  }    
   }

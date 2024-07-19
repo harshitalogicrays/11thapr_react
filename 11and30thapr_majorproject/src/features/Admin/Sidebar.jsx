@@ -16,40 +16,27 @@ const Sidebar = ({ isOpen,onClose}) => {
     {as:NavLink,to:'/admin/view/product',text:'View Products'},
   ]
   return (
-    <Nav defaultActiveKey="/home" className="flex-column">
-      {mylinks.map((links,i)=><Nav.Link as={links.as} to={links.to}  
+  <> 
+      
+       <div className={sidebarClass}>
+       <button type="button" className="btn-close text-reset float-end" onClick={onClose}></button>
+  
+            <ul className="nav flex-column mt-5">
+            {mylinks.map((links,i)=> <li className="nav-item"><Nav.Link as={links.as} to={links.to}  className="nav-link" 
       style={({ isActive}) => {
                     return {
                       fontWeight: isActive ? "bold" : "",
                       color: isActive ? "red" : "",
                       backgroundColor: isActive ? "yellow" : "",
                     };
-                  }}>{links.text}</Nav.Link>)}
-    
-    
-  </Nav>
-
-//   <> 
-      
-//        <div className={sidebarClass}>
-//        <button type="button" className="btn-close text-reset float-end" onClick={onClose}></button>
-  
-//             <ul className="nav flex-column mt-5">
-//             {mylinks.map((links,i)=> <li className="nav-item"><Nav.Link as={links.as} to={links.to}  className="nav-link" 
-//       style={({ isActive}) => {
-//                     return {
-//                       fontWeight: isActive ? "bold" : "",
-//                       color: isActive ? "red" : "",
-//                       backgroundColor: isActive ? "yellow" : "",
-//                     };
-//                   }}>{links.text}</Nav.Link>
-//   </li>
-// )}
+                  }}>{links.text}</Nav.Link>
+  </li>
+)}
             
-//             </ul>
-//         </div>
+            </ul>
+        </div>
     
-//   </>
+  </>
   )
 }
 
