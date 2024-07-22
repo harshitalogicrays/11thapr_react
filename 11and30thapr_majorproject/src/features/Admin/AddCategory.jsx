@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { selectCategories } from '../../redux/categorySlice'
+import { db } from '../../firebase/config'
+import { addDoc, collection, doc, setDoc, Timestamp } from 'firebase/firestore'
 
 const AddCategory = () => {
     const redirect=useNavigate()
@@ -23,27 +25,21 @@ const AddCategory = () => {
         e.preventDefault()
         if(!id){
             try{
-                await fetch(`${import.meta.env.VITE_BACKEND_URL}/category`,{
-                    method:"POST",
-                    headers:{'content-type':'application/json'},
-                    body:JSON.stringify({...category,createdAt:Date.now()})
-                     }) 
+                const docRef=collection(db,"categories")
+                await addDoc(docRef , {...category,createdAt:Timestamp.now().toMillis()})
                     toast.success("category added")
                     redirect('/admin/view/category')
             }
-            catch(error){toast.error(error)}
+            catch(error){toast.error(error.message)}
         }
         else {
             try{
-                await fetch(`${import.meta.env.VITE_BACKEND_URL}/category/${id}`,{
-                    method:"PUT",
-                    headers:{'content-type':'application/json'},
-                    body:JSON.stringify({...category,createdAt:categoryEdit.createdAt,editedAt:Date.now()})
-                     }) 
+                const docRef = doc(db,"categories",id)
+                await setDoc(docRef,{...category,createdAt:categoryEdit.createdAt,editedAt:Timestamp.now().toMillis()})
                     toast.success("category updated")
                     redirect('/admin/view/category')
             }
-            catch(error){toast.error(error)}
+            catch(error){toast.error(error.message)}
         }
        
        

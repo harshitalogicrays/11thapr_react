@@ -7,8 +7,11 @@ import { toast } from 'react-toastify'
 import Loader from '../Loader'
 import { FaPenAlt, FaTrashAlt } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
+import { deleteDoc, doc } from 'firebase/firestore'
+import { db, storage } from '../../firebase/config'
+import { deleteObject, ref } from 'firebase/storage'
 const ViewSlider = () => {
-    const {data,isLoading}=useFetchCollection("slider")
+    const {data,isLoading}=useFetchCollection("sliders")
     const dispatch = useDispatch()
   
     useEffect(()=>{
@@ -18,13 +21,12 @@ const ViewSlider = () => {
     const sliders = useSelector(selectsliders)
     // console.log(categories)
   
-    let handleDelete=async(id)=>{
+    let handleDelete=(id,image)=>{
       if(window.confirm("Are you sure to delete this??")){
         try{
-          await fetch(`${import.meta.env.VITE_BACKEND_URL}/slider/${id}`,{
-            method:"DELETE"
-          })
-          window.location.reload()
+          const docRef=doc(db,"sliders",id)
+          deleteDoc(docRef)
+          deleteObject(ref(storage,image))
           toast.success("slider deleted")
           }
         catch(error){toast.error(error)}
@@ -65,7 +67,7 @@ const ViewSlider = () => {
                 <td>
                   <Link type="button" class="btn btn-success me-3" to={`/admin/edit/slider/${c.id}`}><FaPenAlt/></Link>
                   
-                  <button type="button" class="btn btn-danger" onClick={()=>handleDelete(c.id)}><FaTrashAlt/></button>
+                  <button type="button" class="btn btn-danger" onClick={()=>handleDelete(c.id,c.image)}><FaTrashAlt/></button>
                 </td>
               </tr>
               )}

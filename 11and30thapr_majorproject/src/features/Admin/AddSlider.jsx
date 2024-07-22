@@ -4,16 +4,30 @@ import { useSelector } from 'react-redux'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { selectsliders } from '../../redux/sliderSlice'
+import { addDoc, collection, doc, setDoc, Timestamp } from 'firebase/firestore'
+import { db, storage } from '../../firebase/config'
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 const AddSlider = () => {
     const redirect=useNavigate()
     let [slider,setSlider]=useState({title:'',desc:'',isActive:false,image:''})
+    let [uploadProgress,setUploadProgress]=useState(0)
     let handleImage=(e)=>{
         let file=e.target.files[0]
-        let reader=new FileReader()
-        reader.readAsDataURL(file)
-        reader.onload=()=>{
-            setSlider({...slider,image:reader.result})
-        }
+        const storageRef = ref(storage, `sliders/${Date.now()}`);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+        uploadTask.on('state_changed', 
+            (snapshot) => {
+              const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              setUploadProgress(progress)
+            }, 
+            (error) => {console.log(error)}, 
+            () => {
+              getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                // console.log('File available at', downloadURL);
+                setSlider({...slider,image:downloadURL})
+              });
+            }
+          );
     }
 
     //edit
@@ -29,27 +43,21 @@ const AddSlider = () => {
         e.preventDefault()
         if(!id){
             try{
-                await fetch(`${import.meta.env.VITE_BACKEND_URL}/slider`,{
-                    method:"POST",
-                    headers:{'content-type':'application/json'},
-                    body:JSON.stringify({...slider,createdAt:Date.now()})
-                     }) 
-                    toast.success("sldier added")
+                const docRef=collection(db,"sliders")
+                await addDoc(docRef , {...slider,createdAt:Timestamp.now().toMillis()})
+                    toast.success("slider added")
                     redirect('/admin/view/slider')
             }
-            catch(error){toast.error(error)}
+            catch(error){toast.error(error.message)}
         }
         else {
             try{
-                await fetch(`${import.meta.env.VITE_BACKEND_URL}/slider/${id}`,{
-                    method:"PUT",
-                    headers:{'content-type':'application/json'},
-                    body:JSON.stringify({...slider,createdAt:sliderEdit.createdAt,editedAt:Date.now()})
-                     }) 
+                const docRef=doc(db,"sliders",id)
+                await setDoc(docRef , {...slider,createdAt:sliderEdit.createdAt,editeAT:Timestamp.now().toMillis()})
                     toast.success("slider updated")
                     redirect('/admin/view/slider')
             }
-            catch(error){toast.error(error)}
+            catch(error){toast.error(error.message)}
         }
 
     }
@@ -73,6 +81,10 @@ const AddSlider = () => {
                         <Form.Control as="textarea" name="desc" value={slider.desc} 
                         onChange={(e)=>setSlider({...slider,desc:e.target.value})}></Form.Control>
                     </Form.Group>
+                    {uploadProgress > 0 && 
+                    <div class="progress" role="progressbar">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" style={{width: `${uploadProgress}%`}}>{uploadProgress < 100 ? `uploading ${uploadProgress}%` : `uploaded${uploadProgress}%`  }</div>
+                    </div>}
                     <Form.Group className='mb-3'>
                         <Form.Label>Image</Form.Label>
                         <Form.Control type="file" name="image" onChange={handleImage} ></Form.Control>

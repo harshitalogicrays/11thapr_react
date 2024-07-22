@@ -7,9 +7,11 @@ import { Link } from 'react-router-dom'
 import { FaPenAlt, FaTrashAlt } from 'react-icons/fa'
 import useFetchCollection from '../../customhook/useFetchCollection'
 import Loader from '../Loader'
+import { deleteDoc, doc } from 'firebase/firestore'
+import { db } from '../../firebase/config'
 
 const ViewCategory = () => {
-  const {data,isLoading}=useFetchCollection("category")
+  const {data,isLoading}=useFetchCollection("categories")
   const dispatch = useDispatch()
 
   useEffect(()=>{
@@ -23,10 +25,8 @@ const ViewCategory = () => {
   let handleDelete=async(id)=>{
     if(window.confirm("Are you sure to delete this??")){
       try{
-        await fetch(`${import.meta.env.VITE_BACKEND_URL}/category/${id}`,{
-          method:"DELETE"
-        })
-        window.location.reload()
+        const docRef=doc(db,"categories",id)
+        await deleteDoc(docRef)
         toast.success("category deleted")
         }
       catch(error){toast.error(error)}
@@ -48,6 +48,7 @@ const ViewCategory = () => {
         <thead>
         <tr>
         <th>Sr. No</th>
+        <th>ID</th>
         <th>Name</th>
         <th>Desc</th>
         <th>status</th>
@@ -58,6 +59,7 @@ const ViewCategory = () => {
         {categories.map((c,i)=>
             <tr key={c.id}>
               <td>{i+1}</td>
+              <td>{c.id}</td>
               <td>{c.name}</td>
               <td>{c.desc}</td>
               <td>{c.isActive ? <span class="badge rounded-pill text-bg-success" >Active</span>

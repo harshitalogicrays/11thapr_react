@@ -2,13 +2,13 @@ import React, { useEffect, useState,useContext } from 'react'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { NavLink, useNavigate } from 'react-router-dom';
+import {  NavLink, useNavigate } from 'react-router-dom';
 import { BsArrowLeftCircle, BsHouse } from "react-icons/bs";
-import { FaLock, FaPenAlt, FaShoppingCart } from 'react-icons/fa';
+import { FaLock, FaPenAlt, FaSearch, FaShoppingCart } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOGIN_USER, LOGOUT_USER, selectIsLoggedIn, selectUserName, selectUserRole } from '../redux/authSlice';
-import { Button } from 'react-bootstrap';
+import { Button, Form, InputGroup } from 'react-bootstrap';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth, db } from '../firebase/config';
 import { doc, getDoc } from 'firebase/firestore';
@@ -40,6 +40,14 @@ const   username=useSelector(selectUserName)
       });
        
 }
+
+
+//search 
+let [search,setSearch]=useState('')
+let handleSearch=(e)=>{
+  e.preventDefault()
+  
+}
   return (
     <Navbar expand="lg"  bg="dark" data-bs-theme="dark">
     <Container fluid>
@@ -62,8 +70,16 @@ const   username=useSelector(selectUserName)
                     };
                   }}>Products</Nav.Link>
         </Nav>
-        <Nav>
+        <Form inline>
+        <InputGroup>
+              <Form.Control type="search" placeholder="Search"  name="search" value={search}
+              onChange={(e)=>setSearch(s.target.value)}/>
+              <Button variant="danger" onClick={handleSearch}><FaSearch/></Button>
+          </InputGroup>            
+          </Form>
 
+        <Nav>
+       
         <Nav.Link as={NavLink} to='/cart'><FaShoppingCart size={30}/><span
               class="badge rounded-pill text-bg-danger">{0}</span>
         </Nav.Link>
