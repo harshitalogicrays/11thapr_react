@@ -6,7 +6,8 @@ import { toast } from 'react-toastify'
 import { selectsliders } from '../../redux/sliderSlice'
 import { addDoc, collection, doc, setDoc, Timestamp } from 'firebase/firestore'
 import { db, storage } from '../../firebase/config'
-import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
+import { deleteObject, getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
+import productSlice from '../../redux/productSlice'
 const AddSlider = () => {
     const redirect=useNavigate()
     let [slider,setSlider]=useState({title:'',desc:'',isActive:false,image:''})
@@ -51,9 +52,10 @@ const AddSlider = () => {
             catch(error){toast.error(error.message)}
         }
         else {
+            if(slider.image != sliderEdit.image){deleteObject(ref(storage,sliderEdit.image))}
             try{
                 const docRef=doc(db,"sliders",id)
-                await setDoc(docRef , {...slider,createdAt:sliderEdit.createdAt,editeAT:Timestamp.now().toMillis()})
+                await setDoc(docRef , {...slider,createdAt:sliderEdit.createdAt,editedAt:Timestamp.now().toMillis()})
                     toast.success("slider updated")
                     redirect('/admin/view/slider')
             }
@@ -89,6 +91,8 @@ const AddSlider = () => {
                         <Form.Label>Image</Form.Label>
                         <Form.Control type="file" name="image" onChange={handleImage} ></Form.Control>
                     </Form.Group>
+                    {id && <img src={slider.image} width={100} height={100}/>}
+                    <br/>
                     <div class="form-check-inline mb-3">                
                     <label class="form-check-label me-2">status: </label>
                     <input class="form-check-input" type="radio" name="isActive" 

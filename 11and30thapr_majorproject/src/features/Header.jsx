@@ -13,6 +13,7 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth, db } from '../firebase/config';
 import { doc, getDoc } from 'firebase/firestore';
 import { ShowOnLogin, ShowOnLogout } from './hiddenlinks';
+import { selectCartItems } from '../redux/cartSlice';
 const Header = () => {
   const dispatch=useDispatch()
   const navigate=useNavigate()
@@ -40,6 +41,8 @@ const   username=useSelector(selectUserName)
       });
        
 }
+
+const cartItems=useSelector(selectCartItems)
 
 
 //search 
@@ -81,7 +84,7 @@ let handleSearch=(e)=>{
         <Nav>
        
         <Nav.Link as={NavLink} to='/cart'><FaShoppingCart size={30}/><span
-              class="badge rounded-pill text-bg-danger">{0}</span>
+              class="badge rounded-pill text-bg-danger">{cartItems.length}</span>
         </Nav.Link>
           <ShowOnLogin>
            <Nav.Link >Welcome {username}</Nav.Link>

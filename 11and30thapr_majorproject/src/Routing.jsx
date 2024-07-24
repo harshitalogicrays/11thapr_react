@@ -37,6 +37,7 @@ const allroutes = createBrowserRouter([
             {path:'view/slider',element:<ViewSlider/>},
             {path:'add/product',element:<AddProduct/>},
             {path:'view/product',element:<ViewProduct/>},
+            {path:'edit/product/:id',element:<AddProduct/>},
         ]
      },
      {path:'*',element:<PageNotFound/>}

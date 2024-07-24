@@ -5,18 +5,28 @@ import LoginImg from '/src/assets/login.png'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Loader from '../features/Loader'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { LOGIN_USER } from '../redux/authSlice'
 import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
 import { auth, db } from '../firebase/config'
 import { doc, getDoc, setDoc, Timestamp } from 'firebase/firestore'
 import { FaGoogle } from 'react-icons/fa'
 import { GoogleAuthProvider } from 'firebase/auth'
+import { selectURL } from '../redux/cartSlice'
 const Login = () => {
   const {register,handleSubmit, formState: { errors }, trigger} = useForm()
   let [isLoading,setIsLoading]=useState(false)
   const redirect = useNavigate()
   const dispatch=useDispatch()
+
+  const previousURL=useSelector(selectURL)
+  const redirectURL=()=>{
+    if(previousURL.includes('cart')){
+      redirect('/cart')
+    }
+    else redirect('/')
+  }
+
     let submitData=async(user)=>{
       setIsLoading(true)
       signInWithEmailAndPassword(auth, user.email, user.password)
@@ -27,7 +37,9 @@ const Login = () => {
           if(docSnap.exists()){
             // console.log(docSnap.data())
             if(docSnap.data().role=="0") redirect('/admin')
-            else if(docSnap.data().role=="1") redirect('/')
+            else if(docSnap.data().role=="1") 
+              // redirect('/')
+            redirectURL()
           }
            toast.success("loggedIn successfully")
            setIsLoading(false)
@@ -47,7 +59,8 @@ const Login = () => {
         const docRef = doc(db,"users",user.uid)
         await setDoc(docRef,{username:user.displayName,email:user.email,role:'1',createdAt:Timestamp.now().toMillis()})
         toast.success("loggedIn successfully")
-        redirect('/')
+        // redirect('/')
+        redirectURL()
       }).catch((error) => {
         toast.error(error.message)
       });

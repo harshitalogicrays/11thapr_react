@@ -3,8 +3,18 @@ import ProductItems from './ProductItems'
 import products from '../assets/products.js'
 import {Row, Col, Container, Form } from 'react-bootstrap'
 import useFetchCollection from '../customhook/useFetchCollection.js'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectproducts, store_product } from '../redux/productSlice.js'
 const ProductData = () => {
   const {data:categories}=useFetchCollection("categories")
+  const {data}=useFetchCollection("products")
+  const dispatch = useDispatch()
+
+  useEffect(()=>{
+    dispatch(store_product(data)) 
+  },[data])   
+
+  const products = useSelector(selectproducts)
   return (
    <>
    <Container className="mt-5">

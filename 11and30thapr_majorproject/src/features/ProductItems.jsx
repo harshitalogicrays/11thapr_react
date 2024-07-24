@@ -4,7 +4,7 @@ import Loader from './Loader'
 import ReactPaginate from 'react-paginate'
 
 const ProductItems = ({products}) => {
-  let itemsPerPage = 3
+  let itemsPerPage = 2
   const [itemOffset, setItemOffset] = useState(0);
   const [currentItems ,setCurrentItems ]=useState([])
   const [pageCount,setPageCount]=useState(0)

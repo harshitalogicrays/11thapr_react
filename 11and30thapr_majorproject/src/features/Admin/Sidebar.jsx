@@ -14,6 +14,7 @@ const Sidebar = ({ isOpen,onClose}) => {
     {as:NavLink,to:'/admin/view/slider',text:'View Slider'},
     {as:NavLink,to:'/admin/add/product',text:'Add Product'},
     {as:NavLink,to:'/admin/view/product',text:'View Products'},
+    {as:NavLink,to:'/admin/view/orders',text:'View Orders'},
   ]
   return (
   <> 
