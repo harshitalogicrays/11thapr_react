@@ -14,6 +14,8 @@ import { auth, db } from '../firebase/config';
 import { doc, getDoc } from 'firebase/firestore';
 import { ShowOnLogin, ShowOnLogout } from './hiddenlinks';
 import { selectCartItems } from '../redux/cartSlice';
+import useFetchCollection from '../customhook/useFetchCollection';
+import { FILTER_BY_SEARCH } from '../redux/filterSlice';
 const Header = () => {
   const dispatch=useDispatch()
   const navigate=useNavigate()
@@ -46,10 +48,12 @@ const cartItems=useSelector(selectCartItems)
 
 
 //search 
+const {data:products}=useFetchCollection("products")
 let [search,setSearch]=useState('')
 let handleSearch=(e)=>{
   e.preventDefault()
-  
+  dispatch(FILTER_BY_SEARCH({products,search}))
+  navigate('/products')
 }
   return (
     <Navbar expand="lg"  bg="dark" data-bs-theme="dark">
@@ -76,7 +80,7 @@ let handleSearch=(e)=>{
         <Form inline>
         <InputGroup>
               <Form.Control type="search" placeholder="Search"  name="search" value={search}
-              onChange={(e)=>setSearch(s.target.value)}/>
+              onChange={(e)=>setSearch(e.target.value)}/>
               <Button variant="danger" onClick={handleSearch}><FaSearch/></Button>
           </InputGroup>            
           </Form>

@@ -18,7 +18,7 @@ const Cart = () => {
   let url =window.location.href //http://localhost:3000/cart
   let handleCheckout=()=>{
     if(cartItems.length==0){redirect('/cart')}
-    else if(isLoggedIn){redirect('/checkout')}
+    else if(isLoggedIn){redirect('/checkout-details')}
     else {
       dispatch(SAVE_URL(url))
       redirect('/login')

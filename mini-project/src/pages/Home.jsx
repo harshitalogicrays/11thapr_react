@@ -5,7 +5,7 @@ import Loader from '../features/Loader'
 
 const Home = () => {
 const [users,setUsers]=useState([])
-  // useEffect(()=>{getData() },[])
+  useEffect(()=>{getData() },[])
 
   // let getData=()=>{
   //   fetch("https://jsonplaceholder.typicode.com/users")
@@ -71,6 +71,17 @@ const [users,setUsers]=useState([])
   //     console.log(err)
   //   }
   // }
+
+  let getData=async()=>{
+    try{
+          let res= await fetch("http://localhost:1000")
+          let data = await res.json()
+          console.log(data)
+        }
+        catch(err){
+          console.log(err)
+        }
+    }
   return (
     
    <>

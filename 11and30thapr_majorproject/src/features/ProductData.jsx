@@ -5,6 +5,7 @@ import {Row, Col, Container, Form } from 'react-bootstrap'
 import useFetchCollection from '../customhook/useFetchCollection.js'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectproducts, store_product } from '../redux/productSlice.js'
+import { FILTER_BY_CATEGORY, selectCalVal, selectFilterProducts, selectSearchVal } from '../redux/filterSlice.js'
 const ProductData = () => {
   const {data:categories}=useFetchCollection("categories")
   const {data}=useFetchCollection("products")
@@ -15,12 +16,23 @@ const ProductData = () => {
   },[data])   
 
   const products = useSelector(selectproducts)
+
+  //filter by category
+  const [category,setCategory]=useState('')
+  useEffect(()=>{
+      dispatch(FILTER_BY_CATEGORY({products,category}))
+  },[category])
+
+  const filterProducts=useSelector(selectFilterProducts)
+  const catval=useSelector(selectCalVal)
+  const searchval=useSelector(selectSearchVal)
+  // console.log(catval,filterProducts)
   return (
    <>
    <Container className="mt-5">
     <Row>
       <Col xs={3}>   
-          <Form.Select>
+          <Form.Select value={category} name="category" onChange={(e)=>setCategory(e.target.value)}>
           <option value='' selected disabled>select category</option>
           {categories.map((c,i)=>  <option key={c.id}>{c.name}</option>)}
         </Form.Select>
@@ -33,8 +45,16 @@ const ProductData = () => {
       </Form.Select>
       </Col>
     </Row>  
+  
+    <>
+      {(catval !='' || searchval !='') ? <>
+              {
+                filterProducts.length==0 ? <h1>No product found</h1> :
+                <ProductItems products={filterProducts}/>
+              }
+      </> :<> <ProductItems products={products}/></>}
+    </>
     </Container>
-    <ProductItems products={products}/>
    </>
   )
 }

@@ -6,7 +6,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import ProductData from "./features/ProductData";
 import Cart from "./features/Cart";
-import { ProtectedAdmin } from "./features/hiddenlinks";
+import { Protected, ProtectedAdmin } from "./features/hiddenlinks";
 import AdminLayout from "./features/Admin/AdminLayout";
 import Dashboard from "./features/Admin/Dashboard";
 import AddProduct from "./features/Admin/AddProduct";
@@ -15,6 +15,8 @@ import AddCategory from "./features/Admin/AddCategory";
 import ViewCategory from "./features/Admin/ViewCategory";
 import AddSlider from "./features/Admin/AddSlider";
 import ViewSlider from "./features/Admin/ViewSlider";
+import CheckoutDetails from "./features/CheckoutDetails";
+import Checkout from "./features/Checkout";
 
 const allroutes = createBrowserRouter([
     { path: "/", element: <App /> , 
@@ -24,9 +26,12 @@ const allroutes = createBrowserRouter([
             {path:'register',element:<Register/>},
             {path:'products',element:<ProductData/>},
             {path:'cart',element:<Cart/>},
+            {path:'checkout-details',element:<Protected><CheckoutDetails/></Protected>},
+            {path:'checkout',element:<Protected><Checkout/></Protected>},
+     
         ]
      },
-     {path:'/admin',element:<AdminLayout/>,
+     {path:'/admin',element:<ProtectedAdmin><AdminLayout/></ProtectedAdmin>,
         children:[
             {path:'dash',element:<Dashboard/>},
             {path:'add/category',element:<AddCategory/>},
