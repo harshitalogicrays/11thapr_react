@@ -17,6 +17,8 @@ import AddSlider from "./features/Admin/AddSlider";
 import ViewSlider from "./features/Admin/ViewSlider";
 import CheckoutDetails from "./features/CheckoutDetails";
 import Checkout from "./features/Checkout";
+import CheckoutPayment from "./features/CheckoutPayment";
+import CheckoutSuccess from "./features/CheckoutSuccess";
 
 const allroutes = createBrowserRouter([
     { path: "/", element: <App /> , 
@@ -28,7 +30,8 @@ const allroutes = createBrowserRouter([
             {path:'cart',element:<Cart/>},
             {path:'checkout-details',element:<Protected><CheckoutDetails/></Protected>},
             {path:'checkout',element:<Protected><Checkout/></Protected>},
-     
+            {path:'checkout-payment',element:<Protected><CheckoutPayment/></Protected>},
+            {path:'checkout-success',element:<CheckoutSuccess/>},
         ]
      },
      {path:'/admin',element:<ProtectedAdmin><AdminLayout/></ProtectedAdmin>,

@@ -9,29 +9,18 @@ const stripe = new Stripe('sk_test_51NOvqGSAvExKFAjaTkSgqxNXs5WQ8TofJQrBOJIhdkFN
 app.use(cors());
 app.use(express.json());
 
-const calculateOrderAmount = (items) => {
-  // Replace this constant with a calculation of the order's amount
-  // Calculate the order total on the server to prevent
-  // people from directly manipulating the amount on the client
-  return 1400;
-};
-
+//http://localhost:1000/create-payment-intent
 app.post("/create-payment-intent", async (req, res) => {
-  const { items } = req.body;
-
-  // Create a PaymentIntent with the order amount and currency
+  console.log(req.body)
+  const { totalAmount } = req.body; //100
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: calculateOrderAmount(items),
+    amount: totalAmount *100, //100.00
     currency: "inr",
-    // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
-    automatic_payment_methods: {
+     automatic_payment_methods: {
       enabled: true,
     },
   });
-
-  res.send({
-    clientSecret: paymentIntent.client_secret,
-  });
+  res.send({clientSecret: paymentIntent.client_secret});
 });
 
 //http://localhost:1000

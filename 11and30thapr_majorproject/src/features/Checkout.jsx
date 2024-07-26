@@ -1,5 +1,6 @@
 import React from 'react'
 import CheckoutSummary from './CheckoutSummary'
+import { Link } from 'react-router-dom'
 
 const Checkout = () => {
     let CODorder=()=>{
@@ -16,9 +17,9 @@ const Checkout = () => {
                 <button type="button" class="btn btn-primary mb-3" onClick={CODorder}>
                     Cash on Delivery
                 </button> <br/>
-                <button type="button" class="btn btn-danger" >
+                <Link type="button" class="btn btn-danger" to='/checkout-payment' >
                     Stripe Payment
-                </button>
+                </Link>
             </div>
         </div>
     </div>
