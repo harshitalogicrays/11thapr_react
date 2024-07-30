@@ -51,7 +51,7 @@ export const saveorder=async(orderconfig)=>{
 }
 
 export const sendmail=(data)=>{
-    fetch("http://localhost:1000/mail", {
+    fetch("https://11thapr-firebase-node.vercel.app/mail", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),

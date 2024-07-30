@@ -11,7 +11,7 @@ const CheckoutPayment = () => {
     const [clientSecret, setClientSecret] = useState("");
     const totalAmount=useSelector(selectTotalAmount)
     useEffect(() => {
-         fetch("http://localhost:1000/create-payment-intent", {
+         fetch("https://11thapr-firebase-node.vercel.app/create-payment-intent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ totalAmount }),
