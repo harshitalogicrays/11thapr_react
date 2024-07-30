@@ -7,8 +7,14 @@ import {
 import CheckoutSummary from "../CheckoutSummary";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { EMPTY_CART, selectCartItems, selectTotalAmount } from "../../redux/cartSlice";
+import { selectUserEmail, selectUserId, selectUserName } from "../../redux/authSlice";
+import { selectShippingAddress } from "../../redux/checkoutSlice";
+import { saveorder, sendmail } from "../hiddenlinks";
 
 export default function CheckoutForm() {
+    const dispatch=useDispatch()
     const redirect=useNavigate()
     const stripe = useStripe();
     const elements = useElements();
@@ -21,6 +27,13 @@ export default function CheckoutForm() {
         if (!clientSecret) {  return;   }
     }, [stripe]);
 
+
+    const userId=useSelector(selectUserId)
+    const userEmail=useSelector(selectUserEmail)
+    const shippingAddress=useSelector(selectShippingAddress)
+    const cartItems=useSelector(selectCartItems)
+    const totalAmount=useSelector(selectTotalAmount)
+    const userName=useSelector(selectUserName)
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!stripe || !elements) { return;   }
@@ -34,7 +47,19 @@ export default function CheckoutForm() {
             if(result.error){toast.error(result.error);return}
             if(result.paymentIntent){
               if(result.paymentIntent.status=='succeeded'){
+                // console.log(result.paymentIntent)
                 toast.success("payment done")
+                let payment_mode="online"
+                let payment_id=result.paymentIntent.id
+                let orderDate=new Date().toLocaleDateString()
+                let orderTime=new Date().toLocaleTimeString()
+                let orderStatus="placed"
+                let orderconfig ={userId,userEmail,shippingAddress,cartItems,totalAmount,payment_mode,payment_id,orderDate,orderTime,orderStatus}
+                saveorder(orderconfig)
+
+                let objmail = {status:orderStatus,email:userEmail,name:userName,amount:totalAmount,payment:payment_mode}
+                sendmail(objmail)
+                dispatch(EMPTY_CART())           
                 redirect('/checkout-success')
               }
             } 

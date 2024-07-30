@@ -1,6 +1,9 @@
 import { useSelector } from "react-redux"
 import { Navigate } from "react-router-dom"
 import { selectIsLoggedIn, selectUserRole } from "../redux/authSlice"
+import { addDoc, collection, Timestamp } from "firebase/firestore"
+import { db } from "../firebase/config"
+import { toast } from "react-toastify"
 
 
 export const ShowOnLogout=({children})=>{
@@ -34,4 +37,25 @@ export const Protected=({children})=>{
         else return <Navigate to='/' replace={true} />
     }
     else return <Navigate to='/login' replace={true} />
+}
+
+
+export const saveorder=async(orderconfig)=>{
+    // console.log("order",orderconfig)
+    try{
+        const docRef=collection(db,"orders")
+        await addDoc(docRef , {...orderconfig,createdAt:Timestamp.now().toMillis()})
+            toast.success("order placed")
+    }
+    catch(error){toast.error(error.message)}
+}
+
+export const sendmail=(data)=>{
+    fetch("http://localhost:1000/mail", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      })
+        .then((res) => res.json())
+        .then((data) => toast.success(data.msg));
 }

@@ -1,14 +1,25 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CheckoutSummary from './CheckoutSummary'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectShippingAddress, store_checkout } from '../redux/checkoutSlice'
 
 const CheckoutDetails = () => {
     let [shippingAddress,setShippingAddress]=useState({name:'',email:'',mobile:'',city:'',address:'',pincode:''})
   const navigate=useNavigate()
+  const dispatch=useDispatch()
  let handleSubmit=(e)=>{
     e.preventDefault()
+    dispatch(store_checkout(shippingAddress))
     navigate('/checkout')
  }
+ const saddress=useSelector(selectShippingAddress)
+ useEffect(()=>{
+  if(Object.keys(saddress).length != 0){
+    setShippingAddress({...saddress})
+  }
+  else { setShippingAddress({name:'',email:'',mobile:'',city:'',address:'',pincode:''})}
+ },[])
   return (
     <div className='container mt-5 shadow p-3'>
         <div className="row">

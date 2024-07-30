@@ -5,6 +5,7 @@ import sliderSlice from "./sliderSlice";
 import productSlice from "./productSlice";
 import cartSlice from "./cartSlice";
 import filterSlice from "./filterSlice";
+import checkoutSlice from "./checkoutSlice";
 
 const store = configureStore({
     reducer:{
@@ -14,6 +15,7 @@ const store = configureStore({
         product:productSlice.reducer,
         cart:cartSlice.reducer,
         filter:filterSlice.reducer,
+        checkout:checkoutSlice.reducer
     }
 })
 
