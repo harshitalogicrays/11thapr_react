@@ -1,11 +1,22 @@
-import React, { useState } from 'react'
-import { useDispatch} from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector} from 'react-redux'
 import Loader from './Loader'
 import { Link } from 'react-router-dom'
+import useFetchCollection from '../customhook/useFetchCollection'
+import { selectorders, store_order } from '../redux/orderSlice'
+import { selectUserId } from '../redux/authSlice'
 
 const MyOrders = () => {
+  const {data,isLoading}=useFetchCollection("orders")
     const dispatch=useDispatch()
-    const orders=useState([])
+    
+  useEffect(()=>{
+    dispatch(store_order(data)) 
+  },[data])   
+
+  const allorders = useSelector(selectorders)
+  const userId=useSelector(selectUserId)
+  const orders = allorders.filter(item=>item.userId==userId)
   return (
     <div className='container shadow mt-3 p-3'>
     {isLoading && <Loader/>}
@@ -21,13 +32,14 @@ const MyOrders = () => {
                <th>Order ID</th>
                <th>Order Amount</th>
                <th>Order Status</th>
+               <th>payment mode</th>
                <th>View</th>
              </tr>
            </thead>
            <tbody>
              {orders.map((order, index) => {
                const {
-                 id, orderDate, orderTime, totalAmount, orderStatus} = order;
+                 id, orderDate, orderTime, totalAmount, orderStatus,payment_mode} = order;
                return (
                  <tr key={id}>
                    <td>{index + 1}</td>
@@ -42,6 +54,7 @@ const MyOrders = () => {
                        {orderStatus}
                      </p>
                    </td>
+                   <td>{payment_mode}</td>
                    <td>
                     <Link to={`/myorders/details/${id}`} type="button" class="btn btn-primary">View</Link>
                    </td>

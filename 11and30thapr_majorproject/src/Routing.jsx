@@ -19,6 +19,11 @@ import CheckoutDetails from "./features/CheckoutDetails";
 import Checkout from "./features/Checkout";
 import CheckoutPayment from "./features/CheckoutPayment";
 import CheckoutSuccess from "./features/CheckoutSuccess";
+import MyOrders from "./features/MyOrders";
+import MyOrderDetails from "./features/MyOrderDetails";
+import Orders from "./features/Admin/Orders";
+import OrderDetails from "./features/Admin/OrderDetails";
+import ProductDetails from "./features/ProductDetails";
 
 const allroutes = createBrowserRouter([
     { path: "/", element: <App /> , 
@@ -27,11 +32,14 @@ const allroutes = createBrowserRouter([
             {path:'login',element:<Login/>},
             {path:'register',element:<Register/>},
             {path:'products',element:<ProductData/>},
+            {path:'product-details/:id',element:<ProductDetails/>},
             {path:'cart',element:<Cart/>},
             {path:'checkout-details',element:<Protected><CheckoutDetails/></Protected>},
             {path:'checkout',element:<Protected><Checkout/></Protected>},
             {path:'checkout-payment',element:<Protected><CheckoutPayment/></Protected>},
             {path:'checkout-success',element:<CheckoutSuccess/>},
+            {path:'myorders',element:<MyOrders/>},
+            {path:'myorders/details/:id',element:<MyOrderDetails/>},
         ]
      },
      {path:'/admin',element:<ProtectedAdmin><AdminLayout/></ProtectedAdmin>,
@@ -46,6 +54,8 @@ const allroutes = createBrowserRouter([
             {path:'add/product',element:<AddProduct/>},
             {path:'view/product',element:<ViewProduct/>},
             {path:'edit/product/:id',element:<AddProduct/>},
+            {path:'orders',element:<Orders/>},
+            {path:'orders/details/:id',element:<OrderDetails/>},
         ]
      },
      {path:'*',element:<PageNotFound/>}

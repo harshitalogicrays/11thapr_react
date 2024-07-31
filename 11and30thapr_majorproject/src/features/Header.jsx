@@ -2,7 +2,7 @@ import React, { useEffect, useState,useContext } from 'react'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import {  NavLink, useNavigate } from 'react-router-dom';
+import {  Link, NavLink, useNavigate } from 'react-router-dom';
 import { BsArrowLeftCircle, BsHouse } from "react-icons/bs";
 import { FaLock, FaPenAlt, FaSearch, FaShoppingCart } from 'react-icons/fa';
 import { toast } from 'react-toastify';
@@ -19,7 +19,9 @@ import { FILTER_BY_SEARCH } from '../redux/filterSlice';
 const Header = () => {
   const dispatch=useDispatch()
   const navigate=useNavigate()
-const   username=useSelector(selectUserName)
+  const  username=useSelector(selectUserName)
+  const role=useSelector(selectUserRole)
+  const isLoggedIn=useSelector(selectIsLoggedIn)
   useEffect(()=>{
     onAuthStateChanged(auth, async(user) => {
       if (user) {
@@ -77,6 +79,10 @@ let handleSearch=(e)=>{
                     };
                   }}>Products</Nav.Link>
         </Nav>
+        <Nav className="me-auto">
+          {(role=='0' && isLoggedIn) &&
+          <Button variant="danger" as={Link} to='/admin'>Admin Panel</Button>}
+        </Nav>
         <Form inline>
         <InputGroup>
               <Form.Control type="search" placeholder="Search"  name="search" value={search}
@@ -91,6 +97,8 @@ let handleSearch=(e)=>{
               class="badge rounded-pill text-bg-danger">{cartItems.length}</span>
         </Nav.Link>
           <ShowOnLogin>
+            {role=="1" && <Nav.Link as={NavLink} to='/myorders'>My Orders</Nav.Link>}
+          
            <Nav.Link >Welcome {username}</Nav.Link>
            <Nav.Link onClick={handleLogout}><BsArrowLeftCircle />Logout</Nav.Link>
            </ShowOnLogin>

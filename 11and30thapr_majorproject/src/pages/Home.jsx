@@ -1,5 +1,6 @@
 import React from 'react'
 import Slider from '../features/Slider'
+import ProductData from '../features/ProductData'
 
 
 const Home = () => {
@@ -8,7 +9,7 @@ const Home = () => {
     
    <>
    <Slider/>
-    <h1>Home Page</h1>
+   <ProductData/>
    </>
   )
 }

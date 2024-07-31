@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { ADD_TO_CART } from '../redux/cartSlice'
+import { Link } from 'react-router-dom'
 
 const ProductCard = ({product}) => {
   const dispatch=useDispatch()
@@ -10,7 +11,9 @@ const ProductCard = ({product}) => {
   return (
     <div className='col-3'>
         <div class="card">
+            <Link to={`/product-details/${product.id}`} >
             <img class="card-img-top" src={product.image} alt={product.name} height={200}/>
+            </Link>
             <div class="card-body">
                 <h4 class="card-title">{product.name}</h4>
                 <p class="card-text">{product.category}</p>

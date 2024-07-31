@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectorders, STORE_ORDERS } from '../../redux/orderSlice'
+import { selectorders, store_order } from '../../redux/orderSlice'
 import { Link } from 'react-router-dom'
 import useFetchCollection from '../../customhook/useFetchCollection'
 
@@ -8,7 +8,7 @@ const Orders = () => {
     const {data,isLoading}=useFetchCollection("orders")
     const dispatch=useDispatch()
     useEffect(()=>{
-        dispatch(STORE_ORDERS(data))
+        dispatch(store_order(data))
     },[data])
     const orders=useSelector(selectorders)
   return (
@@ -27,13 +27,14 @@ const Orders = () => {
                <th>User</th>
                <th>Order Amount</th>
                <th>Order Status</th>
+               <th>Payment</th>
                <th>View</th>
              </tr>
            </thead>
            <tbody>
              {orders.map((order, index) => {
                const {
-                 id, orderDate, orderTime, totalAmount, orderStatus,userEmail} = order;
+                 id, orderDate, orderTime, totalAmount, orderStatus,userEmail,payment_mode} = order;
                return (
                  <tr key={id}>
                    <td>{index + 1}</td>
@@ -49,7 +50,9 @@ const Orders = () => {
                        {orderStatus}
                      </p>
                    </td>
+                   <td>{payment_mode}</td>
                    <td>
+                    
                     <Link to={`/admin/orders/details/${id}`} type="button" class="btn btn-primary">View</Link>
                    </td>
                  </tr>

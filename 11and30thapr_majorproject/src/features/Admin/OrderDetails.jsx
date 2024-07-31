@@ -13,7 +13,7 @@ const OrderDetails = () => {
     <div className='container shadow mt-2 p-2'>
     <h1>    Order Details</h1><hr/>
     <div className='mb-3'>
-      <Link to='/admin/view/orders' className='btn btn-primary mb-2'>
+      <Link to='/admin/orders' className='btn btn-primary mb-2'>
           <FaArrowCircleLeft/>Back to Orders 
       </Link>
     </div>
@@ -39,7 +39,8 @@ const OrderDetails = () => {
               pincode :{order.shippingAddress.pincode}
             </div>
             <div className="col">
-                <ChangeOrderStatus s={order.orderStatus} order={order} id={order.id}/>    
+              <h4 className='text-info'>Update  Order Status</h4>
+                <ChangeOrderStatus s={order.orderStatus} order={order}  id={order.id}/>    
             </div>
           </div>
 
